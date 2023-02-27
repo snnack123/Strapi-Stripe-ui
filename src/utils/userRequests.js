@@ -175,10 +175,23 @@ const registerUser = async (username, email, name, password) => {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
+        const body = {
+            username: username, 
+            email: email, 
+            name: name, 
+            password: password,
+            log: [
+                {
+                    type: 'registered',
+                    date: new Date(),
+                }
+            ]
+        }
+
         const requestOptions = {
             method: 'POST',
             headers: headers,
-            body: JSON.stringify({ username: username, email: email, name: name, password: password }),
+            body: JSON.stringify(body),
             redirect: 'follow'
         };
 
