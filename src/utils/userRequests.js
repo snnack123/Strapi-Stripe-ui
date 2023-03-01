@@ -212,6 +212,26 @@ const registerUser = async (username, email, name, password) => {
     }
 }
 
+const refreshToken = async (jwt) => {
+    try {
+        let headers = new Headers();
+        headers.append('Authorization', `Bearer ${jwt}`);
+
+        const requestOptions = {
+            method: 'POST',
+            headers: headers,
+            redirect: 'follow'
+        };
+
+        const result = await fetch(`${process.env.REACT_APP_BACKEND_URL}/refresh-token`, requestOptions)
+            .then(response => response.json())
+
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     sendConfirmationToken,
     getUserData,
@@ -221,5 +241,6 @@ module.exports = {
     resetUserPassword,
     verifyConfirmAccountToken,
     subscribeUser,
-    registerUser
+    registerUser,
+    refreshToken
 }

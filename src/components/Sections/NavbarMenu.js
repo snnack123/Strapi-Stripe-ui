@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserData } from '../../utils/userRequests'
 import { classNames } from '../../utils/utilFunctions'
+import SignOut from '../Buttons/SignOut'
 
 export default function NavbarMenu() {
     const { user } = useSelector((state) => state.user_store);
@@ -15,22 +16,14 @@ export default function NavbarMenu() {
         if (localStorage.getItem('token')) {
             const result = await getUserData(localStorage.getItem('token'));
             if (!result.error) {
-                dispatch({type: 'user/jwt', payload: localStorage.getItem('token')});
-                if(result.data.confirmed) {
-                    dispatch({type: 'user/user', payload: result.data});
+                dispatch({ type: 'user/jwt', payload: localStorage.getItem('token') });
+                if (result.data.confirmed) {
+                    dispatch({ type: 'user/user', payload: result.data });
                 }
             } else {
                 localStorage.removeItem('token');
             }
         }
-    }
-
-    const logoutUser = () => {
-        setTimeout(() => {
-            localStorage.removeItem('token');
-            dispatch({type: 'user/logout'});
-            navigate('/login');
-        }, 500);
     }
 
     useEffect(() => {
@@ -116,19 +109,11 @@ export default function NavbarMenu() {
                                                         Sign up
                                                     </button>
                                                 </>
-                                            ) 
-                                            : 
-                                            (
-                                                <>
-                                                    <button
-                                                        type="button"
-                                                        className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:bg-indigo-500 focus:ring-offset-2"
-                                                        onClick={() => logoutUser()}
-                                                    >
-                                                        Sign out
-                                                    </button>
-                                                </>
                                             )
+                                                :
+                                                (
+                                                    <SignOut />
+                                                )
                                         }
                                     </span>
                                     <Transition
