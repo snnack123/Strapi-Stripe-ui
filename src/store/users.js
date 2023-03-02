@@ -7,7 +7,8 @@ const initialState = {
         confirmed: false,
         blocked: false,
         stripeId: "",
-    }
+    },
+    refreshToken: false
   };
   
   export function userReducer(state = initialState, action) {
@@ -28,6 +29,8 @@ const initialState = {
         } };
       case "user/stripeId":
         return { ...state, user: {...state.user, stripeId: action.payload} };
+      case "user/refreshToken":
+        return { ...state, refreshToken: action.payload };
       default:
         return state;
     }

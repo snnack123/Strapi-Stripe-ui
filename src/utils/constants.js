@@ -1,0 +1,72 @@
+import { BellIcon, CogIcon, CreditCardIcon, KeyIcon, UserCircleIcon } from '@heroicons/react/24/outline';
+import Billing from '../pages/SettingsPages/Billing';
+import Profile from '../pages/SettingsPages/Profile';
+
+export const tiers = [
+  {
+    name: 'Freelancer',
+    id: 'tier-freelancer',
+    href: '#',
+    priceMonthly: '70 RON',
+    description: 'The essentials to provide your best work for clients.',
+    features: ['5 products', 'Up to 1,000 subscribers', 'Basic analytics', '48-hour support response time'],
+    mostPopular: false,
+    type: 'freelancer',
+  },
+  {
+    name: 'Startup',
+    id: 'tier-startup',
+    href: '#',
+    priceMonthly: '100 RON',
+    description: 'A plan that scales with your rapidly growing business.',
+    features: [
+      '25 products',
+      'Up to 10,000 subscribers',
+      'Advanced analytics',
+      '24-hour support response time',
+      'Marketing automations',
+    ],
+    mostPopular: true,
+    type: 'startup',
+  },
+  {
+    name: 'Enterprise',
+    id: 'tier-enterprise',
+    href: '#',
+    priceMonthly: '150 RON',
+    description: 'Dedicated support and infrastructure for your company.',
+    features: [
+      'Unlimited products',
+      'Unlimited subscribers',
+      'Advanced analytics',
+      '1-hour, dedicated support response time',
+      'Marketing automations',
+    ],
+    mostPopular: false,
+    type: 'enterprise',
+  },
+];
+
+export const profilePath = '/settings?type=profile';
+export const billingPath = '/settings?type=billing';
+
+export const mainNavigation = [
+  { name: 'Homepage', href: '/homepage', current: true },
+  { name: 'Projects', href: '#', current: false },
+  { name: 'Team', href: '#', current: false },
+  { name: 'Pricing', href: '/pricing', current: false },
+  { name: 'Settings', href: profilePath, current: false },
+];
+
+export const subNavigation = [
+  { name: 'Profile', href: profilePath, icon: UserCircleIcon, current: true },
+  { name: 'Account', href: '#', icon: CogIcon, current: false },
+  { name: 'Password', href: '#', icon: KeyIcon, current: false },
+  { name: 'Notifications', href: '#', icon: BellIcon, current: false },
+  { name: 'Billing', href: billingPath, icon: CreditCardIcon, current: false },
+];
+
+export const settingsPages = {
+  profile: <Profile />,
+  billing: <Billing />,
+};

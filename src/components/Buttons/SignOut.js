@@ -18,11 +18,13 @@ export default function SignOut() {
     }
 
     const refreshUserToken = async () => {
+        dispatch({ type: 'user/refreshToken', payload: true });
         const result = await refreshToken(jwt);
 
         if(result.status) {
             localStorage.setItem('token', result.token);
             dispatch({ type: 'user/jwt', payload: result.token });
+            dispatch({ type: 'user/refreshToken', payload: true });
         }
     }
 
@@ -33,7 +35,7 @@ export default function SignOut() {
             if (checkedToken) {
                 refreshUserToken();
             }
-          }, 1000); // 1 second interval
+          }, 300000); // 1 second interval
       
           // Return a cleanup function that clears the interval
           return () => {

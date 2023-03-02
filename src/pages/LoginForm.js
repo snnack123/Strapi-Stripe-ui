@@ -53,7 +53,7 @@ export default function LoginForm() {
                             }
                         }
 
-                        navigate('/');
+                        navigate('/homepage');
                        } else {
                         setLoginErrors({ error: true, message: 'Please confirm your account first' });
                        }

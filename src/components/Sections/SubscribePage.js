@@ -4,7 +4,7 @@ import { CheckIcon } from '@heroicons/react/20/solid'
 import { useNavigate } from 'react-router-dom';
 import { classNames, formatDate } from '../../utils/utilFunctions';
 import { subscribeUser } from '../../utils/userRequests';
-import { tiers } from '../../utils/contants';
+import { tiers } from '../../utils/constants';
 
 export default function SubscribePage() {
   const { user, jwt } = useSelector((state) => state.user_store);
