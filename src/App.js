@@ -19,6 +19,7 @@ function App() {
       <BrowserRouter>
       <NavbarMenu />
         <Routes>
+          <Route exact path="/" element={<Homepage/>}/>
           <Route exact path="/homepage" element={<Homepage/>}/>
           <Route exact path="/login" element={ user.id ? <Homepage/> : <LoginForm />}/>
           <Route exact path="/signup" element={ !user.id ? <RegisterForm /> : <LoginForm />}/>

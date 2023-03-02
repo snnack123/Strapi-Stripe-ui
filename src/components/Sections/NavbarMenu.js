@@ -26,7 +26,7 @@ export default function NavbarMenu() {
             } else {
                 localStorage.removeItem('token');
             }
-        } 
+        }
 
         setFinishedLogging(true);
     }
@@ -75,10 +75,9 @@ export default function NavbarMenu() {
                                             <Link
                                                 key={option.name}
                                                 to={option.href}
-                                                className={option.current
-                                                ? 'inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-900'
-                                                : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700'
-                                                }
+                                                className={`${option.current ?
+                                                    'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} 
+                                                    inline-flex items-center border-b-2 px-1 pt-1 text-sm font-medium`}
                                                 onClick={() => setActiveNavbarOption(option.name.toLowerCase())}
                                             >
                                                 {option.name}
@@ -92,7 +91,7 @@ export default function NavbarMenu() {
                                 <Menu as="div" className="relative ml-3">
                                     <span className="isolate inline-flex rounded-md shadow-sm">
                                         {
-                                         finishedLogging && !user.id ? (
+                                            finishedLogging && !user.id ? (
                                                 <>
                                                     <button
                                                         type="button"
