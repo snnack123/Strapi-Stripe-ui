@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router-dom'
@@ -6,10 +6,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getUserData } from '../../utils/userRequests'
 import { classNames } from '../../utils/utilFunctions'
 import SignOut from '../Buttons/SignOut'
+import logo from '../../assets/logo.svg'
 
 export default function NavbarMenu() {
     const { user } = useSelector((state) => state.user_store);
     const { mainNavigationOptions } = useSelector((state) => state.navigation_store);
+    const [finishedLogging, setFinishedLogging] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -24,7 +26,9 @@ export default function NavbarMenu() {
             } else {
                 localStorage.removeItem('token');
             }
-        }
+        } 
+
+        setFinishedLogging(true);
     }
 
     const setActiveNavbarOption = (type) => {
@@ -56,12 +60,12 @@ export default function NavbarMenu() {
                                 <div className="flex flex-shrink-0 items-center">
                                     <img
                                         className="block h-8 w-auto lg:hidden"
-                                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                                        src={logo}
                                         alt="Your Company"
                                     />
                                     <img
                                         className="hidden h-8 w-auto lg:block"
-                                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                                        src={logo}
                                         alt="Your Company"
                                     />
                                 </div>
@@ -88,7 +92,7 @@ export default function NavbarMenu() {
                                 <Menu as="div" className="relative ml-3">
                                     <span className="isolate inline-flex rounded-md shadow-sm">
                                         {
-                                            !user.id ? (
+                                         finishedLogging && !user.id ? (
                                                 <>
                                                     <button
                                                         type="button"
