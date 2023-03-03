@@ -7,32 +7,70 @@ import { getUserData } from '../../utils/userRequests'
 import { classNames } from '../../utils/utilFunctions'
 import SignOut from '../Buttons/SignOut'
 import logo from '../../assets/logo.svg'
+import { mainNavigation } from '../../utils/constants'
 
 export default function NavbarMenu() {
-    const { user } = useSelector((state) => state.user_store);
+    const { user, loggedIn } = useSelector((state) => state.user_store);
     const { mainNavigationOptions } = useSelector((state) => state.navigation_store);
-    const [finishedLogging, setFinishedLogging] = useState(false);
+    const [activeNavigationOptions, setActiveNavigationOptions] = useState([]);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const setActiveNavbarOption = (type) => {
+        dispatch({ type: 'mainNavigation/active', payload: type });
+    }
+
+    const handleActiveNavigation = () => {
+        let navbarSection = null;
+
+        mainNavigation.forEach((item) => {
+            if (window.location.href.includes(item.href)) {
+                navbarSection = item.name.toLowerCase();
+            }
+        })
+
+        if (navbarSection) {
+            dispatch({ type: 'mainNavigation/active', payload: navbarSection });
+        }
+    }
+
+    const handleNavigationOptions = (isError) => {
+        const activeOptions = [];
+        
+        if (!isError) {
+            setActiveNavigationOptions(...activeOptions);
+        } 
+
+        mainNavigationOptions?.forEach((link) => {
+            if (!link.restricted) {
+                activeOptions.push(link);
+            }
+        });
+
+        return activeOptions;
+    }
+
     const onPageRefresh = async () => {
+        handleActiveNavigation();
+ 
         if (localStorage.getItem('token')) {
             const result = await getUserData(localStorage.getItem('token'));
+
             if (!result.error) {
                 dispatch({ type: 'user/jwt', payload: localStorage.getItem('token') });
+                dispatch({ type: 'user/loggedIn', payload: true });
+                handleNavigationOptions(true);
+
                 if (result.data.confirmed) {
                     dispatch({ type: 'user/user', payload: result.data });
                 }
             } else {
                 localStorage.removeItem('token');
+                handleNavigationOptions(false);
             }
+        } else {
+            handleNavigationOptions(false);
         }
-
-        setFinishedLogging(true);
-    }
-
-    const setActiveNavbarOption = (type) => {
-        dispatch({ type: 'mainNavigation/active', payload: type });
     }
 
     useEffect(() => {
@@ -70,8 +108,8 @@ export default function NavbarMenu() {
                                     />
                                 </div>
                                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                                    {
-                                        mainNavigationOptions.map((option) => (
+                                    {activeNavigationOptions.length &&
+                                        activeNavigationOptions.map((option) => (
                                             <Link
                                                 key={option.name}
                                                 to={option.href}
@@ -91,7 +129,7 @@ export default function NavbarMenu() {
                                 <Menu as="div" className="relative ml-3">
                                     <span className="isolate inline-flex rounded-md shadow-sm">
                                         {
-                                            finishedLogging && !user.id ? (
+                                            loggedIn && !user.id ? (
                                                 <>
                                                     <button
                                                         type="button"

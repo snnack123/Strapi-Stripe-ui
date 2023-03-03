@@ -51,11 +51,11 @@ export const profilePath = '/settings?type=profile';
 export const billingPath = '/settings?type=billing';
 
 export const mainNavigation = [
-  { name: 'Homepage', href: '/homepage', current: true },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Pricing', href: '/pricing', current: false },
-  { name: 'Settings', href: profilePath, current: false },
+  { name: 'Homepage', href: '/homepage', current: true, restricted: false },
+  { name: 'Projects', href: '#', current: false, restricted: false  },
+  { name: 'Team', href: '#', current: false, restricted: false  },
+  { name: 'Pricing', href: '/pricing', current: false, restricted: false  },
+  { name: 'Settings', href: profilePath, current: false, restricted: true  },
 ];
 
 export const subNavigation = [
@@ -70,3 +70,5 @@ export const settingsPages = {
   profile: <Profile />,
   billing: <Billing />,
 };
+
+export const refreshTokenMilliseconds = 300000; // 5 minutes interval

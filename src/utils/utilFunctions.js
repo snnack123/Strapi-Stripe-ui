@@ -18,7 +18,7 @@ const formatDate = (endDate) => {
 const isTokenCloseToExpire = (token) => { 
     const decoded = jwtDecode(token);
     console.log(decoded.exp)
-    const closeToExpire = decoded.exp - Date.now() / 1000 < 600;
+    const closeToExpire = (decoded.exp - Date.now() / 1000) < 600;
 
     return closeToExpire;
 }

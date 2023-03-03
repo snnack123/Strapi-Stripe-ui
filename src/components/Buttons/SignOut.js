@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { isTokenCloseToExpire } from '../../utils/utilFunctions';
 import { refreshToken } from '../../utils/userRequests'
+import { refreshTokenMilliseconds } from '../../utils/constants';
 
 export default function SignOut() {
     const { jwt } = useSelector((state) => state.user_store);
@@ -18,6 +19,7 @@ export default function SignOut() {
     }
 
     const refreshUserToken = async () => {
+        console.log('refreshing token')
         dispatch({ type: 'user/refreshToken', payload: true });
         const result = await refreshToken(jwt);
 
@@ -35,7 +37,7 @@ export default function SignOut() {
             if (checkedToken) {
                 refreshUserToken();
             }
-          }, 300000); // 1 second interval
+          }, refreshTokenMilliseconds);
       
           // Return a cleanup function that clears the interval
           return () => {
