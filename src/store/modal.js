@@ -9,6 +9,8 @@ const initialState = {
             return { ...state, editCard: action.payload };
         case "payment/createCard":
             return { ...state, createCard: action.payload };
+        case "payment/reset":
+            return initialState;
       default:
         return state;
     }

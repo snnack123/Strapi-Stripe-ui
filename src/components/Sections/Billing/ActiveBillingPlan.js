@@ -3,6 +3,7 @@ import { ArrowUpRightIcon } from '@heroicons/react/20/solid'
 import { useSelector } from 'react-redux'
 import { formatDate } from '../../../utils/utilFunctions';
 import { billingPeriods } from '../../../utils/constants';
+import Skeleton from 'react-loading-skeleton';
 
 export default function ActiveBillingPlan() {
     const { activePlan } = useSelector((state) => state.payment_store);
@@ -23,7 +24,7 @@ export default function ActiveBillingPlan() {
                     <div>
                         <div className='ml-10 truncate text-sm font-medium text-gray-900'>
                             <div className='text-center'>Expire date</div>
-                            <div><span className='text-lg'>{formatDate(activePlan.expireDate)}</span></div>
+                            <div><span className='text-lg'>{activePlan.expireDate ? formatDate(activePlan.expireDate) : <Skeleton />}</span></div>
                         </div>
                     </div>
                 </div>

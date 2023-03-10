@@ -14,6 +14,9 @@ export default function SignOut() {
         setTimeout(() => {
             localStorage.removeItem('token');
             dispatch({ type: 'user/logout' });
+            dispatch({ type: 'payment/reset'});
+            dispatch({ type: 'modal/reset'});
+            dispatch({ type: 'settingsNavigation/reset'});
             navigate('/login');
         }, 500);
     }

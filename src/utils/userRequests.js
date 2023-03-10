@@ -254,6 +254,8 @@ const getSubscriptionPlans = async (jwt) => {
 }
 
 const manageCreditCard = async (type, jwt) => {
+    console.log(type);
+    console.log(jwt);
     try {
         let headers = new Headers();
         headers.append('Authorization', `Bearer ${jwt}`);

@@ -51,6 +51,8 @@ const initialState = {
           ...state,
           mainNavigationOptions: activeMainNavigation
         };
+      case "settingsNavigation/reset":
+        return initialState;
       default:
         return state;
     }

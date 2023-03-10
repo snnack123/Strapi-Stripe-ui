@@ -1,14 +1,14 @@
 const initialState = {
     card: {
-        last4: "",
-        expMonth: "",
-        expYear: "",
-        brand: "",
+        last4: null,
+        expMonth: null,
+        expYear: null,
+        brand: null,
     },
     activePlan: {
-        name: "",
-        type: "",
-        expireDate: "",
+        name: null,
+        type: null,
+        expireDate: null,
     },
   };
   
@@ -18,6 +18,8 @@ const initialState = {
             return { ...state, card: action.payload };
         case "payment/activePlan":
             return { ...state, activePlan: action.payload };
+        case "payment/reset":
+            return initialState;
       default:
         return state;
     }

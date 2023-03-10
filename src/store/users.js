@@ -15,7 +15,6 @@ const initialState = {
   export function userReducer(state = initialState, action) {
     switch (action.type) {
       case "user/jwt":
-        console.log(action.payload)
         return { ...state, jwt: action.payload };
       case "user/user":
         return { ...state, user: action.payload };
