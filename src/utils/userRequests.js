@@ -31,6 +31,7 @@ const getUserData = async (jwt) => {
         }
     } catch (error) {
         console.log(error);
+        return { error: true, message: error.message, data: {}, confirmationMailSent: false };
     }
 }
 
@@ -232,6 +233,47 @@ const refreshToken = async (jwt) => {
     }
 }
 
+const getSubscriptionPlans = async (jwt) => {
+    try {
+        let headers = new Headers();
+        headers.append('Authorization', `Bearer ${jwt}`);
+
+        const requestOptions = {
+            method: 'GET',
+            headers: headers,
+            redirect: 'follow'
+        };
+
+        const result = await fetch(`${process.env.REACT_APP_BACKEND_URL}/subscription-plans`, requestOptions)
+            .then(response => response.json())
+
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const manageCreditCard = async (type, jwt) => {
+    try {
+        let headers = new Headers();
+        headers.append('Authorization', `Bearer ${jwt}`);
+
+        const requestOptions = {
+            method: 'POST',
+            headers: headers,
+            redirect: 'follow'
+        };
+
+        const result = await fetch(`${process.env.REACT_APP_BACKEND_URL}/${type}-card`, requestOptions)
+            .then(response => response.json())
+
+        return result;
+    } catch (error) {
+        console.log(error);
+        return { error: true, message: 'Something went wrong' };
+    }
+}
+
 module.exports = {
     sendConfirmationToken,
     getUserData,
@@ -242,5 +284,7 @@ module.exports = {
     verifyConfirmAccountToken,
     subscribeUser,
     registerUser,
-    refreshToken
+    refreshToken,
+    getSubscriptionPlans,
+    manageCreditCard
 }

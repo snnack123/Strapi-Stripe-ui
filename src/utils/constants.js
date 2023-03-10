@@ -71,4 +71,21 @@ export const settingsPages = {
   billing: <Billing />,
 };
 
+export const billingPeriods = {
+  month: 'Monthly',
+  year: 'Yearly',
+}
+
+export const cardTypes = {
+  visa: 'Visa',
+  mastercard: 'Mastercard',
+}
+
+export const cardData = { 
+  name: '',
+  cardNumber: '',
+  expirationDate: '',
+  cvc: '',
+}
+
 export const refreshTokenMilliseconds = 300000; // 5 minutes interval

@@ -19,14 +19,17 @@ export default function SignOut() {
     }
 
     const refreshUserToken = async () => {
-        console.log('refreshing token')
-        dispatch({ type: 'user/refreshToken', payload: true });
-        const result = await refreshToken(jwt);
+        console.log('refreshing token');
 
-        if(result.status) {
-            localStorage.setItem('token', result.token);
-            dispatch({ type: 'user/jwt', payload: result.token });
+        if(jwt.length > 0) {
             dispatch({ type: 'user/refreshToken', payload: true });
+            const result = await refreshToken(jwt);
+    
+            if(result.status) {
+                localStorage.setItem('token', result.token);
+                dispatch({ type: 'user/jwt', payload: result.token });
+                dispatch({ type: 'user/refreshToken', payload: true });
+            }
         }
     }
 

@@ -1,18 +1,17 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { getUserData } from '../../utils/userRequests'
-import { classNames } from '../../utils/utilFunctions'
-import SignOut from '../Buttons/SignOut'
-import logo from '../../assets/logo.svg'
-import { mainNavigation } from '../../utils/constants'
+import React, { Fragment, useEffect } from 'react';
+import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserData } from '../../utils/userRequests';
+import { classNames } from '../../utils/utilFunctions';
+import SignOut from '../Buttons/SignOut';
+import logo from '../../assets/logo.svg';
+import { mainNavigation } from '../../utils/constants';
 
 export default function NavbarMenu() {
     const { user, loggedIn } = useSelector((state) => state.user_store);
     const { mainNavigationOptions } = useSelector((state) => state.navigation_store);
-    const [activeNavigationOptions, setActiveNavigationOptions] = useState([]);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -34,22 +33,6 @@ export default function NavbarMenu() {
         }
     }
 
-    const handleNavigationOptions = (isError) => {
-        const activeOptions = [];
-        
-        if (!isError) {
-            setActiveNavigationOptions(...activeOptions);
-        } 
-
-        mainNavigationOptions?.forEach((link) => {
-            if (!link.restricted) {
-                activeOptions.push(link);
-            }
-        });
-
-        return activeOptions;
-    }
-
     const onPageRefresh = async () => {
         handleActiveNavigation();
  
@@ -57,20 +40,19 @@ export default function NavbarMenu() {
             const result = await getUserData(localStorage.getItem('token'));
 
             if (!result.error) {
-                dispatch({ type: 'user/jwt', payload: localStorage.getItem('token') });
-                dispatch({ type: 'user/loggedIn', payload: true });
-                handleNavigationOptions(true);
-
+                const token = localStorage.getItem('token');
+                dispatch({ type: 'user/jwt', payload: token });
                 if (result.data.confirmed) {
                     dispatch({ type: 'user/user', payload: result.data });
                 }
             } else {
                 localStorage.removeItem('token');
-                handleNavigationOptions(false);
+                dispatch({ type: 'user/logout' });
+                navigate('/login');
             }
-        } else {
-            handleNavigationOptions(false);
         }
+
+        dispatch({ type: 'user/loggedIn', payload: true });
     }
 
     useEffect(() => {
@@ -108,8 +90,8 @@ export default function NavbarMenu() {
                                     />
                                 </div>
                                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-                                    {activeNavigationOptions.length &&
-                                        activeNavigationOptions.map((option) => (
+                                    {
+                                        mainNavigationOptions?.map((option) => (
                                             <Link
                                                 key={option.name}
                                                 to={option.href}
