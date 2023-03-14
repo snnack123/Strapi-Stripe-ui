@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 export default function Settings() {
     const { subNavigationOptions } = useSelector((state) => state.navigation_store);
     const [searchParams] = useSearchParams();
-    const [pageType, setPageType] = useState('profile');
+    const [pageType, setPageType] = useState(null);
 
     const type = searchParams.get("type");
     const navigate = useNavigate();

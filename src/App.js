@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux'
 import Settings from './pages/SettingsPages/Settings';
 import Spinner from './components/Spinner';
 import "react-loading-skeleton/dist/skeleton.css";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const { user, loggedIn } = useSelector((state) => state.user_store);

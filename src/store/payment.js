@@ -10,6 +10,7 @@ const initialState = {
         type: null,
         expireDate: null,
     },
+    availablePlans: [],
   };
   
   export function paymentReducer(state = initialState, action) {
@@ -18,6 +19,8 @@ const initialState = {
             return { ...state, card: action.payload };
         case "payment/activePlan":
             return { ...state, activePlan: action.payload };
+        case "payment/availablePlans":
+            return { ...state, availablePlans: action.payload };
         case "payment/reset":
             return initialState;
       default:

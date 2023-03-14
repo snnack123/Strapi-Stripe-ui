@@ -1,6 +1,7 @@
 import { BellIcon, CogIcon, CreditCardIcon, KeyIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import Billing from '../pages/SettingsPages/Billing';
 import Profile from '../pages/SettingsPages/Profile';
+import Security from '../pages/SettingsPages/Security';
 
 export const tiers = [
   {
@@ -49,6 +50,7 @@ export const tiers = [
 
 export const profilePath = '/settings?type=profile';
 export const billingPath = '/settings?type=billing';
+export const securityPath = '/settings?type=security';
 
 export const mainNavigation = [
   { name: 'Homepage', href: '/homepage', current: true, restricted: false },
@@ -61,14 +63,15 @@ export const mainNavigation = [
 export const subNavigation = [
   { name: 'Profile', href: profilePath, icon: UserCircleIcon, current: true },
   { name: 'Account', href: '#', icon: CogIcon, current: false },
-  { name: 'Password', href: '#', icon: KeyIcon, current: false },
   { name: 'Notifications', href: '#', icon: BellIcon, current: false },
   { name: 'Billing', href: billingPath, icon: CreditCardIcon, current: false },
+  { name: 'Security Settings', href: securityPath, icon: KeyIcon, current: false },
 ];
 
 export const settingsPages = {
   profile: <Profile />,
   billing: <Billing />,
+  security: <Security />
 };
 
 export const billingPeriods = {
@@ -86,6 +89,16 @@ export const cardData = {
   cardNumber: '',
   expirationDate: '',
   cvc: '',
+}
+
+export const updateEmailData = {
+  email: '',
+  confirmEmail: '',
+}
+
+export const updatePasswordData = {
+  password: '',
+  passwordConfirmation: '',
 }
 
 export const refreshTokenMilliseconds = 300000; // 5 minutes interval

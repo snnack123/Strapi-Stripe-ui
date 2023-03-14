@@ -254,19 +254,38 @@ const getSubscriptionPlans = async (jwt) => {
 }
 
 const manageCreditCard = async (type, jwt) => {
-    console.log(type);
-    console.log(jwt);
     try {
         let headers = new Headers();
         headers.append('Authorization', `Bearer ${jwt}`);
-
         const requestOptions = {
             method: 'POST',
             headers: headers,
             redirect: 'follow'
         };
-
         const result = await fetch(`${process.env.REACT_APP_BACKEND_URL}/${type}-card`, requestOptions)
+            .then(response => response.json())
+        return result;
+    } catch (error) {
+        console.log(error);
+        return { error: true, message: 'Something went wrong' };
+    }
+}
+
+const updateUser = async (type, data, jwt) => {
+    try {
+        let headers = new Headers();
+        headers.append('Authorization', `Bearer ${jwt}`);
+        headers.append('Content-Type', 'application/json');
+        
+
+        const requestOptions = {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify({ type: type, data: data }),
+            redirect: 'follow'
+        };
+
+        const result = await fetch(`${process.env.REACT_APP_BACKEND_URL}/update-user`, requestOptions)
             .then(response => response.json())
 
         return result;
@@ -288,5 +307,6 @@ module.exports = {
     registerUser,
     refreshToken,
     getSubscriptionPlans,
+    updateUser,
     manageCreditCard
 }

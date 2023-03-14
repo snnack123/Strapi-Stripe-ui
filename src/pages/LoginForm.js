@@ -43,6 +43,7 @@ export default function LoginForm() {
                                 email: data.user.email,
                                 confirmed: data.user.confirmed,
                                 blocked: data.user.blocked,
+                                name: data.user.name,
                             }
                         });
 

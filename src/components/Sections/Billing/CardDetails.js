@@ -2,8 +2,6 @@ import React from 'react'
 import { CreditCardIcon } from '@heroicons/react/20/solid'
 import { useSelector } from 'react-redux';
 import { cardTypes } from '../../../utils/constants';
-import CreateCardModal from './CreateCardModal';
-import EditCardModal from './EditCardModal';
 import visa from '../assets/visa.png';
 import mastercard from '../assets/mastercard.png';
 import { manageCreditCard } from '../../../utils/userRequests';
@@ -12,17 +10,6 @@ import Skeleton from 'react-loading-skeleton';
 export default function CardDetails() {
     const { card } = useSelector((state) => state.payment_store);
     const { jwt } = useSelector((state) => state.user_store);
-    // const dispatch = useDispatch();
-
-    // const handleCreateModal = (e, type) => {
-    //     e.preventDefault();
-    //     dispatch({ type: 'payment/createCard', payload: type });
-    // }
-
-    // const handleEditModal = (e, type) => {
-    //     e.preventDefault();
-    //     dispatch({ type: 'payment/editCard', payload: type });
-    // }
 
     const handleCreditCard = async (type, e) => {
         e.preventDefault();
@@ -97,8 +84,6 @@ export default function CardDetails() {
                     }
                 </div>
             </div>
-            <CreateCardModal />
-            <EditCardModal />
         </div>
     )
 }

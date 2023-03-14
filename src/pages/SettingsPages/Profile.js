@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import { Switch } from '@headlessui/react'
 import { classNames } from '../../utils/utilFunctions'
+import { useSelector } from 'react-redux';
+import Skeleton from 'react-loading-skeleton';
 
 export default function Profile() {
+    const { user } = useSelector((state) => state.user_store);
     const [availableToHire, setAvailableToHire] = useState(true);
     const [privateAccount, setPrivateAccount] = useState(false);
     const [allowCommenting, setAllowCommenting] = useState(true);
@@ -20,41 +23,30 @@ export default function Profile() {
 
                 <div className="mt-6 grid grid-cols-12 gap-6">
                     <div className="col-span-12 sm:col-span-6">
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                            Full name
-                        </label>
-                        <input
-                            type="text"
-                            name="name"
-                            id="name"
-                            className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
-                        />
+                        <div className="block text-sm font-medium pb-1 text-gray-700">
+                            Full name: <span className='font-bold text-gray-900'>{user.name ? user.name : <Skeleton />}</span>
+                        </div>
+                        <div className="block text-sm font-medium pb-1 text-gray-700">
+                            Email: <span className='font-bold text-gray-900'>{user.email}</span>
+                        </div>
+                        <div className="block text-sm font-medium text-gray-700">
+                            Username: <span className='font-bold text-gray-900'>{user.username}</span>
+                        </div>
                     </div>
-
-                    <div className="col-span-12">
-                        <label htmlFor="url" className="block text-sm font-medium text-gray-700">
-                            URL
-                        </label>
-                        <input
-                            type="text"
-                            name="url"
-                            id="url"
-                            className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
-                        />
-                    </div>
-
-                    <div className="col-span-12 sm:col-span-6">
-                        <label htmlFor="company" className="block text-sm font-medium text-gray-700">
-                            Company
-                        </label>
-                        <input
-                            type="text"
-                            name="company"
-                            id="company"
-                            className="mt-1 block w-full rounded-md border border-gray-300 py-2 px-3 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-sky-500 sm:text-sm"
-                        />
+                    <div className="col-span-12 sm:col-span-6 border rounded-xl w-44 p-4 text-center">
+                        <div className="block text-sm font-medium text-gray-700">
+                            Thank you for being our customer!
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div className="mt-4 flex justify-end py-4 px-4 sm:px-6">
+                <button
+                    type="submit"
+                    className="ml-5 inline-flex justify-center rounded-md border border-transparent bg-sky-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-sky-800 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
+                >
+                    Edit personal details
+                </button>
             </div>
 
             {/* Privacy section */}

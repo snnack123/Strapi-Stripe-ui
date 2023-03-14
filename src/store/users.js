@@ -34,6 +34,8 @@ const initialState = {
         return { ...state, refreshToken: action.payload };
       case "user/loggedIn":
         return { ...state, loggedIn: action.payload };
+      case "user/email":
+        return { ...state, user: {...state.user, email: action.payload} };
       default:
         return state;
     }

@@ -9,9 +9,8 @@ import Skeleton from 'react-loading-skeleton'
 
 export default function Billing() {
     const { jwt } = useSelector((state) => state.user_store);
-    const { activePlan } = useSelector((state) => state.payment_store);
+    const { activePlan, availablePlans } = useSelector((state) => state.payment_store);
 
-    const [availablePlans, setAvailablePlans] = useState([]);
     const [selectedPlan, setSelectedPlan] = useState([]);
     const [payments, setPayments] = useState([{ date: '#', description: '#', amount: '#', invoice: '#' }]);
     const [annualBillingEnabled, setAnnualBillingEnabled] = useState(true);
@@ -19,20 +18,22 @@ export default function Billing() {
     const dispatch = useDispatch();
 
     const handleSubscriptionPlans = useCallback(async () => {
-        const result = await getSubscriptionPlans(jwt);
+        if (availablePlans.length === 0) {
+            const result = await getSubscriptionPlans(jwt);
 
-        if (!result.error) {
-            const subscriptions = sortSubscriptions(result.data.plans);
-            setAvailablePlans(subscriptions);
-            dispatch({ type: 'payment/activePlan', payload: result.data.activePlan });
-            dispatch({ type: 'payment/card', payload: result.data.card });
-            if (result.data.payments.length > 0) {
-                setPayments(result.data.payments);
-            }
+            if (!result.error) {
+                const subscriptions = sortSubscriptions(result.data.plans);
+                dispatch({ type: 'payment/availablePlans', payload: subscriptions });
+                dispatch({ type: 'payment/activePlan', payload: result.data.activePlan });
+                dispatch({ type: 'payment/card', payload: result.data.card });
+                if (result.data.payments.length > 0) {
+                    setPayments(result.data.payments);
+                }
 
-            if (result.data.activePlan.name.length > 0) {
-                const activeSubscription = subscriptions.find((plan) => plan.name === result.data.activePlan.name);
-                setSelectedPlan(activeSubscription);
+                if (result.data.activePlan.name.length > 0) {
+                    const activeSubscription = subscriptions.find((plan) => plan.name === result.data.activePlan.name);
+                    setSelectedPlan(activeSubscription);
+                }
             }
         }
     }, [jwt, dispatch]);
@@ -43,11 +44,11 @@ export default function Billing() {
 
     return (
         <>
-            <div className="divide-y divide-gray-200 lg:col-span-9" action="#" method="POST">
+            <div className="divide-y divide-gray-200 lg:col-span-9">
                 {/* {availablePlans.length > 0 && */}
                 <>
                     <section aria-labelledby="payment-details-heading">
-                        <form action="#" method="POST">
+                        <form>
                             <div className="shadow sm:overflow-hidden sm:rounded-md">
                                 <div className="bg-white py-6 px-4 sm:p-6">
                                     <div>
